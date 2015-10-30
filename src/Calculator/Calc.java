@@ -1,11 +1,11 @@
-package Calculator;
-
-import java.util.Scanner;
 
 /**
  Made by Yakimov Denis, 30/10/2015 for Hillel Java course
  Homework 1
-  */
+ */
+package Calculator;
+
+import java.util.Scanner;
 
 public class Calc {
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class Calc {
         System.out.println("Example: \"32\"(enter), \"+\"(enter), \"12\"(enter). Don't input double brackets!");
         System.out.println("Equation:");
 
-        //Initializing variables
+        //Initializing variables and boolean error flag
         boolean errthrow = false;
         double num1, num2, result = 0;
 
@@ -29,7 +29,7 @@ public class Calc {
         String per = scanner.next();
         String num2s = scanner.next();
 
-        //TRY-CATCH blocks to make sure first and second numbers are not text
+        //Two TRY-CATCH blocks to make sure first and second numbers are not text
         try {num1 = Double.parseDouble(num1s);}
         catch (java.lang.NumberFormatException s) {
             num1=0;
@@ -47,6 +47,7 @@ public class Calc {
         //SWITCH method with resulting calculation and error checks
         if (errthrow)
         {
+            //If error is here, then it's due to error in numbers type mismatch
             System.out.println("TYPE MISMATCH!");
         }
         else
@@ -64,10 +65,10 @@ public class Calc {
                     if (num2 != 0) {
                         result = num1 / num2;
                     } else {
+                        //Throwing dividing by zero error, use the same boolean though
                         System.out.println("Oh, sh1t, you divided by zero@#$u...");
                         errthrow = true;
                     }
-                    ;
                     break;
 
                 case "-":
@@ -75,6 +76,7 @@ public class Calc {
                     break;
 
                 default: {
+                    //Case did not find operator mark, then error is in operator
                     System.out.println("\""+ per +"\" is not a valid operator mark!");
                     errthrow = true;
                 }
@@ -83,7 +85,7 @@ public class Calc {
 
         System.out.println();
         //Output
-        if (errthrow) System.out.println("ERROR IN STATEMENT! Programm will close without result.");
+        if (errthrow) System.out.println("ERROR IN STATEMENT! Programm will be closed without result.");
         else System.out.println("Result is:" + result);
     }
 }
