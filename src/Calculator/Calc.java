@@ -1,4 +1,3 @@
-
 /**
  Made by Yakimov Denis, 30/10/2015 for Hillel Java course
  Homework 1
@@ -6,6 +5,8 @@
 package Calculator;
 
 import java.util.Scanner;
+
+
 
 public class Calc {
     public static void main(String[] args) {
@@ -88,4 +89,17 @@ public class Calc {
         if (errthrow) System.out.println("ERROR IN STATEMENT! Programm will be closed without result.");
         else System.out.println("Result is:" + result);
     }
+
+
+
+private class DoubleTypeExcep(int number; String numbers)
+    {
+        try {number = Double.parseDouble(numbers);}
+        catch (java.lang.NumberFormatException s) {
+        number=0;
+        errthrow = true;
+        System.out.println("Number \"" + num1s + "\" is not a valid double!");
+        }
+        }
+
 }
