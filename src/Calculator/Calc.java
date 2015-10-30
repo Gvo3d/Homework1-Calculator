@@ -9,56 +9,73 @@ import java.util.Scanner;
 public class Calc {
     public static void main(String[] args) {
         //Printing head lines
-        System.out.println("Hillel Java Calculator");
-        System.out.println("Made by Denis Yakimov");
+        System.out.println("JAVACALC");
+        System.out.println("Made by Denis Yakimov for Hillel School");
         System.out.println();
-        System.out.println("Enter first number, operation mark and second number, you'll get the result. Press \'Enter\' key after each number of mark. Use double if you want to.");
+        System.out.println("Enter first number, arithmetic operator and second number, you'll get the result. Press \'Enter\' key after each number or operator. Use DOUBLE if you want to.");
         System.out.println("Supported operations: *, /, +, -");
         System.out.println("Example:");
         System.out.println("5 (enter)");
         System.out.println("+ (enter)");
         System.out.println("3 (enter)");
+        System.out.println();
+        System.out.println("Type \"Q\" or \"q\" for any number or arithmetic operator to close the programm.");
         System.out.println("Don't input brackets!");
+
+
+        //Creating an endless loop, using method CalcBody
+        while(true) CalcBody();
+    }
+
+    //Method CalcBody - main function for calculating
+    private static void CalcBody() {
         System.out.println();
         System.out.println("Equation:");
 
         //Initializing variables and boolean error flag
         boolean errthrow;
         double num1 = 0;
-        double num2 = 0;
+        double num2 = 1;
         double result = 0;
 
 
-        //Initializing SCANNER and filling string variables from it.
+        //Initializing SCANNER and filling string variables from it. Strings are tested for application closing flag
         Scanner scanner = new Scanner(System.in);
         String num1s = scanner.next();
+        CloseFlag(num1s);
+
         String per = scanner.next();
+        CloseFlag(per);
+
         String num2s = scanner.next();
+        CloseFlag(num2s);
+
 
 /**
  * THIS BLOCK WAS COMMENTED TO SHOW THE DIFFIRENCE WITHIN TWO WAYS OF SOLVING THE PROBLEM
- * IF THIS WAY, I CREATED A TWO SIMILIAR CODE BLOCKS THAT CHECHING NUM1S AND NUM2S STRINGS
+ * IF THIS WAY, I CREATED A TWO SIMILIAR CODE BLOCKS THAT CHECKING NUM1S AND NUM2S STRINGS
  * IF ANY OF THEM ARE MISMATCHING WITH DOUBLE TYPE, THEN ERRTHROW BOOLEAN GETS TRUE
  *
  * IN SECOND VARIANT, THAT IS WORKING NOW, I CREATED A METHOD WHICH DOING THE SAME THING
  * BUT THE METHOD DIDN'T HAVE THE CLONE AND CALLED FROM CODE MORE EASILY
  *
  *
-         * Two TRY-CATCH blocks to make sure first and second numbers are not text
-        try {num1 = Double.parseDouble(num1s);}
-        catch (java.lang.NumberFormatException s) {
-            num1=0;
-            errthrow = true;
-            System.out.println("Number \"" + num1s + "\" is not a valid double!");
-        }
+ * Two TRY-CATCH blocks to make sure first and second numbers are not text
+ try {num1 = Double.parseDouble(num1s);}
+ catch (java.lang.NumberFormatException s) {
+ num1=0;
+ errthrow = true;
+ System.out.println("Number \"" + num1s + "\" is not a valid double!");
+ }
 
-        try {num2 = Double.parseDouble(num2s);}
-        catch (java.lang.NumberFormatException s) {
-            num2=0;
-            errthrow = true;
-            System.out.println("Number \"" + num2s + "\" is not a valid double!");
-        }
-*/
+ try {num2 = Double.parseDouble(num2s);}
+ catch (java.lang.NumberFormatException s) {
+ num2=0;
+ errthrow = true;
+ System.out.println("Number \"" + num2s + "\" is not a valid double!");
+ }
+ */
+
 
         //Calling a DoubleTypeExcept method for each variable num1s and num2s, if there are no errors, then parse them
         errthrow = DoubleTypeExcept(num1s);
@@ -70,13 +87,9 @@ public class Calc {
 
 
         //SWITCH method with resulting calculation and error checks
-        if (errthrow)
-        {
-            //If error is here, then it's due to error in numbers type mismatch
-            System.out.println("TYPE MISMATCH!");
-        }
-        else
-        {
+        if (errthrow) System.out.println("TYPE MISMATCH!");
+
+
             switch (per) {
                 case "+":
                     result = num1 + num2;
@@ -91,7 +104,7 @@ public class Calc {
                         result = num1 / num2;
                     } else {
                         //Throwing dividing by zero error, use the same boolean though
-                        System.out.println("Oh, sh1t, you divided by zero@#$u...");
+                        System.out.println("DIVIDING BY ZERO ERROR - NO RESULT!");
                         errthrow = true;
                     }
                     break;
@@ -103,16 +116,24 @@ public class Calc {
                 default: {
                     //Case did not find operator mark, then error is in operator
                     System.out.println("\""+ per +"\" is not a valid operator mark!");
+                    System.out.println("ARITHMETIC OPERATOR MISMATCH!");
                     errthrow = true;
                 }
             }
-        }
 
-        System.out.println();
         //Output
-        if (errthrow) System.out.println("ERROR IN STATEMENT! Programm will be closed without result.");
-        else System.out.println("Result is:" + result);
+        if (!errthrow) System.out.println("Result is:" + result);
     }
+
+
+
+    //Method for closing application
+    private static void CloseFlag(String CFString) {
+        CFString = CFString.toUpperCase();
+        if (CFString.equals ("Q")) System.exit(0);
+    }
+
+
 
     //Creating a method of TYPE CHECKING which returns a BOOLEAN for error statement, false if it's ok, true if types are mismatching
     private static boolean DoubleTypeExcept(String DTEstring) {
@@ -124,5 +145,6 @@ public class Calc {
         }
         return DTEerror;
     }
+
 
 }
