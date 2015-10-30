@@ -1,6 +1,5 @@
 /**
- Made by Yakimov Denis, 30/10/2015 for Hillel Java course
- Homework 1
+ Made by Yakimov Denis, 30/10/2015 for Hillel Java course       Homework 1
  */
 package Calculator;
 
