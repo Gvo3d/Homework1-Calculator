@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 
 public class Calc {
+
+    public static boolean TypeErrorSwitch;
+
     public static void main(String[] args) {
         //Printing head lines
         System.out.println("JAVACALC");
@@ -22,9 +25,8 @@ public class Calc {
         System.out.println("Type \"Q\" or \"q\" for any number or arithmetic operator to close the programm.");
         System.out.println("Don't input brackets!");
 
-
         //Creating an endless loop, using method CalcBody
-        while(true) CalcBody();
+        while (true) CalcBody();
     }
 
     //Method CalcBody - main function for calculating
@@ -37,6 +39,7 @@ public class Calc {
         double num1 = 0;
         double num2 = 1;
         double result = 0;
+        TypeErrorSwitch = false;
 
 
         //Initializing SCANNER and filling string variables from it. Strings are tested for application closing flag
@@ -79,60 +82,57 @@ public class Calc {
 
         //Calling a DoubleTypeExcept method for each variable num1s and num2s, if there are no errors, then parse them
         errthrow = DoubleTypeExcept(num1s);
-        if (!errthrow) {
-            num1 = Double.parseDouble(num1s);
-            errthrow = DoubleTypeExcept(num2s);
-            if (!errthrow) num2 = Double.parseDouble(num2s);
-        }
+        if (!errthrow) num1 = Double.parseDouble(num1s);
+        errthrow = DoubleTypeExcept(num2s);
+        if (!errthrow) num2 = Double.parseDouble(num2s);
+        if (TypeErrorSwitch) System.out.println("TYPE MISMATCH!");
 
 
         //SWITCH method with resulting calculation and error checks
-        if (errthrow) System.out.println("TYPE MISMATCH!");
+        switch (per) {
+            case "+":
+                result = num1 + num2;
+                break;
 
+            case "*":
+                result = num1 * num2;
+                break;
 
-            switch (per) {
-                case "+":
-                    result = num1 + num2;
-                    break;
-
-                case "*":
-                    result = num1 * num2;
-                    break;
-
-                case "/":
-                    if (num2 != 0) {
-                        result = num1 / num2;
-                    } else {
-                        //Throwing dividing by zero error, use the same boolean though
-                        System.out.println("DIVIDING BY ZERO ERROR - NO RESULT!");
-                        errthrow = true;
-                    }
-                    break;
-
-                case "-":
-                    result = num1 - num2;
-                    break;
-
-                default: {
-                    //Case did not find operator mark, then error is in operator
-                    System.out.println("\""+ per +"\" is not a valid operator mark!");
-                    System.out.println("ARITHMETIC OPERATOR MISMATCH!");
+            case "/":
+                if (num2 != 0) {
+                    result = num1 / num2;
+                } else {
+                    //Throwing dividing by zero error, use the same boolean though
+                    System.out.println("DIVIDING BY ZERO ERROR - NO RESULT!");
                     errthrow = true;
                 }
+                break;
+
+            case "-":
+                result = num1 - num2;
+                break;
+
+            default: {
+                //Case did not find operator mark, then error is in operator
+                System.out.println("\"" + per + "\" is not a valid operator mark!");
+                System.out.println("ARITHMETIC OPERATOR MISMATCH!");
+                errthrow = true;
             }
+        }
 
         //Output
         if (!errthrow) System.out.println("Result is:" + result);
     }
 
 
-
     //Method for closing application
     private static void CloseFlag(String CFString) {
         CFString = CFString.toUpperCase();
-        if (CFString.equals ("Q")) System.exit(0);
+        if (CFString.equals("Q")) {
+            System.out.println("Programm closing. Thank you!");
+            System.exit(0);
+        }
     }
-
 
 
     //Creating a method of TYPE CHECKING which returns a BOOLEAN for error statement, false if it's ok, true if types are mismatching
@@ -140,9 +140,10 @@ public class Calc {
         boolean DTEerror = false;
         try {Double DTEnumber = Double.parseDouble(DTEstring);}
         catch (java.lang.NumberFormatException s) {
-            DTEerror = true;
-            System.out.println("Number \"" + DTEstring + "\" is not a valid double!");
-        }
+                DTEerror = true;
+                TypeErrorSwitch = true;
+                System.out.println("Number \"" + DTEstring + "\" is not a valid double!");
+            }
         return DTEerror;
     }
 
